@@ -1,0 +1,20 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "test",
+            "type": "process",
+            "options": {
+                "cwd": "C:/Users/Admin/Games/Morrowind"
+            },
+            "command": "C:/Users/Admin/Games/Morrowind/Morrowind.exe",
+            "args": [
+                "--testAnimationBlending"
+            ],
+            "presentation": {
+                "reveal": "silent",
+                "panel": "dedicated"
+            }
+        },
+    ]
+}
