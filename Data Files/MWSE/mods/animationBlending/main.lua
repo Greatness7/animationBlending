@@ -40,6 +40,13 @@ local function onPlayGroup(e)
         return
     end
 
+    -- Handle the 'blocked' user configuration setting.
+    if not table.empty(config.blocked)
+        and config.blocked[e.reference.baseObject.id:lower()]
+    then
+        return
+    end
+
     -- Do nothing if no valid transition rules were found.
     local rule = rules.get(e.reference, e.currentGroup, e.group)
     if rule == nil or rule.duration == 0 then
