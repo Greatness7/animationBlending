@@ -9,23 +9,18 @@ local easing = require("animationBlending.easing")
 ---@field duration number
 
 
---- A table of BlendRule values and their associated animation groups.
----
----@alias BlendRules table<number, BlendRule>
-
-
 local this = {}
 
 
 --- Default blending rules.
 ---
----@type BlendRules
+---@type BlendRule[]
 local defaultRules = {}
 
 
 --- Per-mesh blending rules.
 ---
----@type table<string, BlendRules>
+---@type table<string, BlendRule[]>
 local blendingRules = {}
 
 
@@ -119,8 +114,8 @@ end
 
 --- Parse the blending rules from raw json data.
 ---
----@param data table
----@return BlendRules
+---@param data BlendRule[]
+---@return BlendRule[]
 local function parseRules(data)
     local rules = {}
 
@@ -156,7 +151,7 @@ end
 --- Load blending rules from a json file.
 ---
 ---@param path string
----@return BlendRules?
+---@return BlendRule[]?
 local function loadRules(path)
     local file = io.open(path, "r")
     if file == nil then
