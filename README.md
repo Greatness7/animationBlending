@@ -18,47 +18,36 @@ Extract the contents of the archive into your /Data Files/ directory.
 
 ## Modder Notes
 
-This mod is inspired by and based on the OpenMW implementation by Max Yari. At the moment the OpenMW version is still under review, but hopefully by the time you read this it will have been approved and made available as a setting you can enable in the OpenMW launcher.
+This mod is inspired by and based on the OpenMW implementation by Max Yari.
 
 ## Configuration
 
-Configuration files are compatible between the two engines with some caveats:
+Configuration files are compatible between the two engines with one caveat:
 
-1. OpenMW supports both `.json` and `.yaml` file formats, while MWSE only supports the `.json` format.
-
-    If you want your configuration file to be usable by both engines you will need to convert any `.yaml` files to `.json` files. This can be done with a tool like <https://www.json2yaml.com/>.
-
-2. OpenMW configuration supports "per-key" blending rules, while MWSE only supports "per-animation" blending rules.
+* OpenMW configuration supports "per-key" blending rules, while MWSE only supports "per-animation" blending rules.
 
     These rules are currently ignored by the MWSE implementation, but will not cause errors. You can safely include them for the benefit of OpenMW users.
 
-Animation blending rules can be configured via `.json` files. 
+Animation blending rules can be configured via `.yaml` files. 
 
-The default blending rules (those applied automatically to npc, creature, and player animations) can be overridden by creating a configuration file at `Data Files/Animations/animation-config.json`.
+The default blending rules (those applied automatically to npc, creature, and player animations) can be overridden by creating a configuration file at `Data Files/Animations/animation-config.yaml`.
 
-Alternatively, you can configure blending rules on a per-asset basis by creating a corresponding `.json` file alongside the asset `.kf` (keyframes) file. For instance to override the blending rules of guars you would use `Data Files/Meshes/r/xguar.json`, which corresponds to the keyframes file `Data Files/Meshes/r/xguar.kf`. 
+Alternatively, you can configure blending rules on a per-asset basis by creating a corresponding `.yaml` file alongside the asset `.kf` (keyframes) file. For instance to override the blending rules of guars you would use `Data Files/Meshes/r/xguar.yaml`, which corresponds to the keyframes file `Data Files/Meshes/r/xguar.kf`. 
 
 Providing per-asset overrides as described above allows animation blending to be applied to environmental objects (like activators or containers) which do not automatically receive blending by default.
 
 The contents of configuration files must conform to the following format:
 
-```json
-{
-  "blending_rules": [
-    {
-      "from": "*",
-      "to": "*",
-      "easing": "sineOut",
-      "duration": 0.25
-    },
-    {
-      "from": "idle",
-      "to": "idleSneak",
-      "easing": "springOutWeak",
-      "duration": 0.4
-    }
-  ]
-}
+```yaml
+blending_rules:
+- from: "*"
+  to: "*"
+  easing: sineOut
+  duration: 0.25
+- from: idle
+  to: idleSneak
+  easing: springOutWeak
+  duration: 0.4
 ```
 
 All blending rules are required to be inside the `blending_rules` array. 
@@ -112,6 +101,10 @@ See <https://easings.net/> and the OpenMW documentation for more information on 
 The **duration** field can be set to zero to disable blending between the specified animation groups.
 
 ## CHANGE LOG
+
+- Version 2.0
+
+     Switch to YAML configuration files.
 
 - Version 1.0
      Initial release.

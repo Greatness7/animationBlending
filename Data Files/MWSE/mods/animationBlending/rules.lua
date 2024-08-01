@@ -112,7 +112,7 @@ local function matchingGroups(pattern)
 end
 
 
---- Parse the blending rules from raw json data.
+--- Parse the blending rules from raw yaml data.
 ---
 ---@param data BlendRule[]
 ---@return BlendRule[]
@@ -120,9 +120,6 @@ local function parseRules(data)
     local rules = {}
 
     for i, rule in ipairs(data) do
-        ---@cast rule BlendRule
-        setmetatable(rule, nil)
-
         log:assert(type(rule.to) == "string", "Invalid 'to' value in blending rule %d", i)
         log:assert(type(rule.from) == "string", "Invalid 'from' value in blending rule %d", i)
         log:assert(type(rule.easing) == "string", "Invalid 'easing' value in blending rule %d", i)
@@ -148,7 +145,7 @@ local function parseRules(data)
 end
 
 
---- Load blending rules from a json file.
+--- Load blending rules from a yaml file.
 ---
 ---@param path string
 ---@return BlendRule[]?
@@ -158,7 +155,7 @@ local function loadRules(path)
         return
     end
 
-    local config = json.decode(file:read("*a"))
+    local config = yaml.decode(file:read("*a"))
     if config == nil then
         log:warn('Decode failure on "%s"', path)
         return
@@ -203,7 +200,7 @@ local function onKeyframesLoad(e)
     blendingRules[path] = {}
 
     local dir, name = path:match("(.-)([^\\]+)%.nif$")
-    local rulesPath = dir .. "x" .. name .. ".json"
+    local rulesPath = dir .. "x" .. name .. ".yaml"
 
     blendingRules[path] = loadRules("data files\\meshes\\" .. rulesPath)
 end
@@ -213,8 +210,8 @@ event.register("keyframesLoad", onKeyframesLoad, { priority = 1000 })
 -- Load and store the default blending rules.
 do
     local rules = (
-        loadRules("data files\\animations\\animation-config.json") -- user override path
-        or loadRules("data files\\mwse\\mods\\animationBlending\\animation-config.json")
+        loadRules("data files\\animations\\animation-config.yaml") -- user override path
+        or loadRules("data files\\mwse\\mods\\animationBlending\\animation-config.yaml")
     )
     if rules then
         defaultRules = rules
