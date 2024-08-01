@@ -186,6 +186,15 @@ local function loadRules(path)
 end
 
 
+--- Set the blending rules for a given mesh.
+---
+---@param path string
+---@param rules BlendRule[]
+function this.setRules(path, rules)
+    blendingRules[path] = parseRules(rules)
+end
+
+
 --- Store blending rules when a keyframe file is loaded.
 ---
 ---@param e keyframesLoadEventData
