@@ -4,6 +4,7 @@
 ---@field maxDistance number
 ---@field logLevel string
 ---@field blocked { [string]: boolean }
+---@field version number
 
 local config = mwse.loadConfig("animationBlending", {
     enabled = true,
