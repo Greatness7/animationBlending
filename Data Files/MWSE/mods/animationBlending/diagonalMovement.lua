@@ -74,15 +74,6 @@ local turn = {
 }
 
 local function diagonalController()
-    local thirdPersonNode = tes3.player.sceneNode --[[@class niNode]]
-    local pelvis = thirdPersonNode:getObjectByName("Bip01 Pelvis")
-    local neck = pelvis:getObjectByName("Bip01 Neck")
-    local head = neck:getObjectByName("Bip01 Head")
-
-    local firstPersonNode = tes3.player1stPerson.sceneNode --[[@class niNode]]
-    local pelvis1st = firstPersonNode:getObjectByName("Bip01 Pelvis")
-    local spine1 = pelvis1st:getObjectByName("Bip01 Spine1")
-
     -- Diagonal move code
     local m = tes3.mobilePlayer
     if (m.isMovingForward and m.isMovingLeft) or (m.isMovingBack and m.isMovingRight) then
@@ -101,34 +92,50 @@ local function diagonalController()
         turn.adjustAngle = turn.targetAngle
     end
 
-    -- Third person diagonal move
-    if not math.isclose(turn.adjustAngle, 0) then
-        turn.pelvis:toRotationX(turn.adjustAngle)
-        turn.head:toRotationX(turn.adjustAngle * -0.7)
-        turn.neck:toRotationX(turn.adjustAngle * -0.1)
-
-        pelvis.rotation = pelvis.rotation * turn.pelvis
-        head.rotation = head.rotation * turn.head
-        neck.rotation = head.parent.rotation * turn.neck
-        thirdPersonNode:update()
+    if math.isclose(turn.adjustAngle, 0) then
+        return
     end
 
-    -- First person spine flex for attacks + diagonal move
-    if config.diagonalMovementFirstPerson and not firstPersonNode.appCulled then
-        turn.pelvis:toRotationX(turn.adjustAngle)
-        turn.spine1:toRotationX(turn.adjustAngle * -0.9)
+    if tes3.is3rdPerson() then
+        local thirdPersonNode = tes3.player.sceneNode --[[@class niNode]]
+        local pelvis = thirdPersonNode:getObjectByName("Bip01 Pelvis")
+        local neck = pelvis:getObjectByName("Bip01 Neck")
+        local head = neck:getObjectByName("Bip01 Head")
 
-        pelvis1st.rotation = pelvis1st.rotation * turn.pelvis
-        spine1.rotation = spine1.rotation * turn.spine1
+        -- Third person diagonal move
+        if config.diagonalMovement then
+            turn.pelvis:toRotationX(turn.adjustAngle)
+            turn.head:toRotationX(turn.adjustAngle * -0.7)
+            turn.neck:toRotationX(turn.adjustAngle * -0.1)
 
-        firstPersonNode:update()
+            pelvis.rotation = pelvis.rotation * turn.pelvis
+            head.rotation = head.rotation * turn.head
+            neck.rotation = head.parent.rotation * turn.neck
+
+            thirdPersonNode:update()
+        end
+    else
+        local firstPersonNode = tes3.player1stPerson.sceneNode --[[@class niNode]]
+        local pelvis = firstPersonNode:getObjectByName("Bip01 Pelvis")
+        local spine1 = pelvis:getObjectByName("Bip01 Spine1")
+
+        -- First person spine flex for attacks + diagonal move
+        if config.diagonalMovement1stPerson then
+            turn.pelvis:toRotationX(turn.adjustAngle)
+            turn.spine1:toRotationX(turn.adjustAngle * -0.9)
+
+            pelvis.rotation = pelvis.rotation * turn.pelvis
+            spine1.rotation = spine1.rotation * turn.spine1
+
+            firstPersonNode:update()
+        end
     end
 end
 event.register("simulated", function()
     if config.enabled == false then
         return
     end
-    if config.diagonalMovement then
+    if config.diagonalMovement or config.diagonalMovement1stPerson then
         diagonalController()
     end
 end, { priority = 10000 })

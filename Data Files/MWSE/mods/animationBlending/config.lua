@@ -6,7 +6,7 @@
 ---@field blocked { [string]: boolean }
 ---@field version number
 ---@field diagonalMovement boolean
----@field diagonalMovementFirstPerson boolean
+---@field diagonalMovement1stPerson boolean
 
 local config = mwse.loadConfig("animationBlending", {
     enabled = true,
