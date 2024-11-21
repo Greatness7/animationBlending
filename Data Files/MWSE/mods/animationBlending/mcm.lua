@@ -1,5 +1,5 @@
 local config = require("animationBlending.config")
-config.version = 1.0
+config.version = 2.0
 
 local template = mwse.mcm.createTemplate({ name = "Animation Blending" })
 template:saveOnClose("animationBlending", config)
@@ -10,9 +10,37 @@ local page = template:createSideBarPage({})
 page.sidebar:createInfo({
     text = (
         "Animation Blending v%.1f\n"
-        .. "By Greatness7\n\n"
+        .. "By Greatness7 & Hrnchamd\n\n"
         .. "Provides smooth animation transitions between animation groups.\n\n"
     ):format(config.version),
+})
+
+-- Features
+
+local features = page:createCategory({ label = "Features" })
+
+features:createOnOffButton({
+    label = "Diagonal Movement (3rd Person)",
+    description = (
+        "Enable diagonal movement for the player in 3rd person view.\n\n"
+        .. "Default: On"
+    ),
+    variable = mwse.mcm.createTableVariable({
+        id = "diagonalMovement",
+        table = config,
+    }),
+})
+
+features:createOnOffButton({
+    label = "Diagonal Movement (1st Person)",
+    description = (
+        "Enable diagonal movement for the player in 1st person view.\n\n"
+        .. "Default: On"
+    ),
+    variable = mwse.mcm.createTableVariable({
+        id = "diagonalMovementFirstPerson",
+        table = config,
+    }),
 })
 
 -- Performance Settings
@@ -49,14 +77,13 @@ settings:createSlider({
     }),
 })
 
-
 -- Developer Settings
 
 local developer = page:createCategory({ label = "Developer Settings" })
 
 developer:createOnOffButton({
-    label = "Enabled",
-    description = "Enable or disable the mod.\n\nDefault: On",
+    label = "Mod Enabled",
+    description = "Enable or disable all aspects of this mod.\n\nDefault: On",
     variable = mwse.mcm.createTableVariable({
         id = "enabled",
         table = config,

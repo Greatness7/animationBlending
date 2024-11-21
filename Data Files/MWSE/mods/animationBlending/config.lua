@@ -5,6 +5,8 @@
 ---@field logLevel string
 ---@field blocked { [string]: boolean }
 ---@field version number
+---@field diagonalMovement boolean
+---@field diagonalMovementFirstPerson boolean
 
 local config = mwse.loadConfig("animationBlending", {
     enabled = true,
@@ -12,6 +14,9 @@ local config = mwse.loadConfig("animationBlending", {
     maxDistance = 4096,
     logLevel = "INFO",
     blocked = {},
+    version = 0.0,
+    diagonalMovement = true,
+    diagonalMovementFirstPerson = true,
 })
 
 return config --[[@as AnimationBlendingConfig]]

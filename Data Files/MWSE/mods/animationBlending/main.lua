@@ -7,6 +7,7 @@ local rules = require("animationBlending.rules")
 local config = require("animationBlending.config")
 local TransitionContext = require("animationBlending.TransitionContext")
 
+dofile("animationBlending.diagonalMovement")
 
 --- Tracks all references that are currently transitioning.
 ---
@@ -65,6 +66,10 @@ event.register("playGroup", onPlayGroup, { priority = -1000 })
 --- Do animation blending for all transitioning references.
 ---
 local function onSimulated()
+    if config.enabled == false then
+        return
+    end
+
     if table.empty(transitioning) then
         return
     end
