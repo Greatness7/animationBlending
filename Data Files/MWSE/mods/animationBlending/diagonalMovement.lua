@@ -97,10 +97,11 @@ local function diagonalController()
     end
 
     if tes3.is3rdPerson() then
-        local thirdPersonNode = tes3.player.sceneNode --[[@class niNode]]
-        local pelvis = thirdPersonNode:getObjectByName("Bip01 Pelvis")
-        local neck = pelvis:getObjectByName("Bip01 Neck")
-        local head = neck:getObjectByName("Bip01 Head")
+        local ref = tes3.player
+        local attachNodes = ref.bodyPartManager.attachNodes
+        local pelvis = attachNodes[tes3.bodyPartAttachment.pelvis + 1].node
+        local neck = attachNodes[tes3.bodyPartAttachment.neck + 1].node
+        local head = attachNodes[tes3.bodyPartAttachment.head + 1].node
 
         -- Third person diagonal move
         if config.diagonalMovement then
@@ -112,12 +113,13 @@ local function diagonalController()
             head.rotation = head.rotation * turn.head
             neck.rotation = head.parent.rotation * turn.neck
 
-            thirdPersonNode:update()
+            ref.sceneNode:update()
         end
     else
-        local firstPersonNode = tes3.player1stPerson.sceneNode --[[@class niNode]]
-        local pelvis = firstPersonNode:getObjectByName("Bip01 Pelvis")
-        local spine1 = pelvis:getObjectByName("Bip01 Spine1")
+        local ref = tes3.player1stPerson
+        local attachNodes = ref.bodyPartManager.attachNodes
+        local pelvis = attachNodes[tes3.bodyPartAttachment.pelvis + 1].node
+        local spine1 = attachNodes[tes3.bodyPartAttachment.spine + 1].node
 
         -- First person spine flex for attacks + diagonal move
         if config.diagonalMovement1stPerson then
@@ -127,7 +129,7 @@ local function diagonalController()
             pelvis.rotation = pelvis.rotation * turn.pelvis
             spine1.rotation = spine1.rotation * turn.spine1
 
-            firstPersonNode:update()
+            ref.sceneNode:update()
         end
     end
 end
