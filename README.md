@@ -103,8 +103,8 @@ The **duration** field can be set to zero to disable blending between the specif
 ## CHANGE LOG
 
 - Version 2.0
-
      Switch to YAML configuration files.
+     Add diagonal movement feature by Hrnchamd.
 
 - Version 1.0
      Initial release.
