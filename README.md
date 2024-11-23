@@ -102,8 +102,8 @@ The **duration** field can be set to zero to disable blending between the specif
 
 ## CHANGE LOG
 
-- Version 2.0
-     Switch to YAML configuration files.
+- Version 2.0  
+     Switch to YAML configuration files.  
      Add diagonal movement feature by Hrnchamd.
 
 - Version 1.0
@@ -115,11 +115,12 @@ All code and assets are free to use as you see fit.
 
 ## Extra Credits
 
-Max Yari (https://www.nexusmods.com/users/11230608)
+Max Yari (https://www.nexusmods.com/users/11230608)  
 For creating the OpenMW Animation Blending feature which inspired this mod. Easing code and config structures were adapted from his work.
 
-Hrnchamd (https://www.nexusmods.com/morrowind/users/843673)
-For helping figure out some engine details and adding related data structures to MWSE for this mod to use.
+Hrnchamd (https://www.nexusmods.com/morrowind/users/843673)  
+For helping figure out some engine details and adding related data structures to MWSE for this mod to use.  
+For contributing the diagonal movement implementation.
 
-Melchior Dahrk (https://www.nexusmods.com/morrowind/users/962116)
+Melchior Dahrk (https://www.nexusmods.com/morrowind/users/962116)  
 For creating the banner image and proof reading the documentation. 
