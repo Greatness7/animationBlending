@@ -1,5 +1,5 @@
 local config = require("animationBlending.config")
-config.version = 2.0
+config.version = 2.1
 
 local template = mwse.mcm.createTemplate({ name = "Animation Blending" })
 template:saveOnClose("animationBlending", config)
