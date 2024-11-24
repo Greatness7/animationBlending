@@ -16,7 +16,7 @@ local config = mwse.loadConfig("animationBlending", {
     blocked = {},
     version = 0.0,
     diagonalMovement = true,
-    diagonalMovementFirstPerson = true,
+    diagonalMovement1stPerson = true,
 })
 
 return config --[[@as AnimationBlendingConfig]]

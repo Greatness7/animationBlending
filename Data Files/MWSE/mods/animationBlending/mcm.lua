@@ -38,7 +38,7 @@ features:createOnOffButton({
         .. "Default: On"
     ),
     variable = mwse.mcm.createTableVariable({
-        id = "diagonalMovementFirstPerson",
+        id = "diagonalMovement1stPerson",
         table = config,
     }),
 })
