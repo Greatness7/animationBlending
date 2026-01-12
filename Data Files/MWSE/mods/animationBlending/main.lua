@@ -103,10 +103,8 @@ local function onSimulated()
                     sceneNode = sceneNode.parent
                 end
                 --- Uses the scene node address as our table key for de-duplication.
-                ---@type fun(ob:niObject):number
-                ---@diagnostic disable-next-line
-                local addressOf = mwse.memory.convertFrom.niObject
-                update[addressOf(sceneNode)] = sceneNode
+                local address = mwse.memory.addressOf(sceneNode) ---@diagnostic disable-line
+                update[address] = sceneNode
             end
         end
     end
