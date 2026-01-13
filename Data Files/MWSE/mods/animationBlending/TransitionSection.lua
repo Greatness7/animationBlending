@@ -60,14 +60,12 @@ function TransitionSection:captureTransforms(ref, bodySection)
 
     local layerIndex = animation.currentAnimGroupLayers[bodySection + 1]
     local layer = animation.keyframeLayers[layerIndex + 1]
-    local sections = {
-        [tes3.animationBodySection.lower] = layer.lower,
-        [tes3.animationBodySection.upper] = layer.upper,
-        [tes3.animationBodySection.leftArm] = layer.leftArm,
-    }
+    local sequence =
+        (bodySection == tes3.animationBodySection.lower) and layer.lower
+        or (bodySection == tes3.animationBodySection.upper) and layer.upper
+        or (bodySection == tes3.animationBodySection.leftArm) and layer.leftArm
 
-    local sequence = sections[bodySection]
-    if sequence == nil then
+    if not sequence then
         return
     end
 
