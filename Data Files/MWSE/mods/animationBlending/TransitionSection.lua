@@ -36,9 +36,12 @@ function TransitionSection:applyAnimationBlending(time)
     local fn = easing[self.rule.easing]
     factor = fn(factor)
 
+    local quaternion = niQuaternion.new()
+
     for node, transform in pairs(self.transforms) do
+        quaternion:fromRotation(node.rotation)
         node.translation = transform.translation:lerp(node.translation, factor)
-        node.rotation = transform.rotation:slerp(node.rotation:toQuaternion(), factor):toRotation()
+        node.rotation:fromQuaternion(transform.rotation:slerp(quaternion, factor))
         node.scale = math.lerp(transform.scale, node.scale, factor)
     end
 
